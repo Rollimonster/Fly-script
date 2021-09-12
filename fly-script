@@ -1,0 +1,111 @@
+local Player = game.Players.LocalPlayer
+local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local Anim = Instance.new("Animation")
+Anim.AnimationId = "rbxassetid://2522658890"
+local PlayAnim = Humanoid:LoadAnimation(Anim)
+local HumaoidRP = Character:WaitForChild("HumanoidRootPart")
+local UIS = game:GetService("UserInputService")
+local Mouse = Player:GetMouse()
+
+
+local TapTime = .25
+local Tapped = false
+local Toggle = false
+
+UIS.InputBegan:Connect(function(Input)
+	if Input.KeyCode == Enum.KeyCode.Space then
+		if not Tapped then
+			Tapped = true
+			wait(TapTime)
+			Tapped = false
+		else
+			if Toggle == false then
+				local Jump = Instance.new("BodyVelocity",HumaoidRP)
+				Jump.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+				Jump.Velocity = Vector3.new(0,50,0)
+				game.Debris:AddItem(Jump,.5)
+				wait(.5)
+				HumaoidRP.Anchored = true
+				Toggle = true
+			elseif Toggle == true then
+				Toggle = false
+				HumaoidRP.Anchored = false
+				local Children = HumaoidRP:GetChildren()
+				for i, child in pairs(Children) do
+					if child:IsA("BodyVelocity") then
+						child:Destroy()
+					end
+				end
+			end
+		end
+	end
+end)
+UIS.InputBegan:Connect(function(Input)
+	if Input.KeyCode == Enum.KeyCode.W then
+		if Toggle == false then return end
+		PlayAnim:Play()
+		HumaoidRP.Anchored = false
+		if HumaoidRP:FindFirstChildOfClass("BodyVelocity") then
+			HumaoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+		end
+		local Forward = Instance.new("BodyVelocity",HumaoidRP)
+		Forward.Name = "ForwardMovement"
+		Forward.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		local Gyro = Instance.new("BodyGyro",HumaoidRP)
+		Gyro.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+		Gyro.D = 100
+		Gyro.P = 10000
+		while Toggle == true do
+			Forward.Velocity = Mouse.Hit.lookVector*150
+			Gyro.CFrame = Mouse.Hit
+			wait()
+		end
+	end
+end)
+UIS.InputEnded:Connect(function(Input)
+	if Input.KeyCode == Enum.KeyCode.W then
+		if Toggle == false then return end
+		if HumaoidRP:FindFirstChild("ForwardMovement") then
+			HumaoidRP.ForwardMovement:Destroy()
+			HumaoidRP.Anchored = true
+			PlayAnim:Stop()
+			if HumaoidRP:FindFirstChildOfClass("BodyGyro") then
+				HumaoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+			end
+		end
+	end
+end)
+UIS.InputBegan:Connect(function(Input)
+	if Input.KeyCode == Enum.KeyCode.S then
+		if Toggle == false then return end
+		HumaoidRP.Anchored = false
+		if HumaoidRP:FindFirstChildOfClass("BodyVelocity") then
+			HumaoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+		end
+		local Back = Instance.new("BodyVelocity",HumaoidRP)
+		Back.Name = "BackMovement"
+		Back.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		local Gyro = Instance.new("BodyGyro",HumaoidRP)
+		Gyro.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+		Gyro.D = 100
+		Gyro.P = 10000
+		while Toggle == true do
+			Back.Velocity = Mouse.Hit.lookVector*-100
+			Gyro.CFrame = Mouse.Hit
+			wait()
+		end
+	end
+end)
+UIS.InputEnded:Connect(function(Input)
+	if Input.KeyCode == Enum.KeyCode.S then
+		if Toggle == false then return end
+		if HumaoidRP:FindFirstChild("BackMovement") then
+			HumaoidRP.BackMovement:Destroy()
+			HumaoidRP.Anchored = true
+			if HumaoidRP:FindFirstChildOfClass("BodyGyro") then
+				HumaoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+			end
+		end
+	end
+end)
