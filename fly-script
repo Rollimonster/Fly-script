@@ -14,7 +14,7 @@ local Tapped = false
 local Toggle = false
 
 UIS.InputBegan:Connect(function(Input)
-	if Input.KeyCode == Enum.KeyCode.Space then
+	if Input.KeyCode == Enum.KeyCode.F then
 		if not Tapped then
 			Tapped = true
 			wait(TapTime)
