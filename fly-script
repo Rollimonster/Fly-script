@@ -18,16 +18,15 @@ UIS.InputBegan:Connect(function(Input)
 		if not Tapped then
 			Tapped = true
 			wait(TapTime)
-			Tapped = false
 		else
 			if Toggle == false then
 				local Jump = Instance.new("BodyVelocity",HumaoidRP)
 				Jump.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
 				Jump.Velocity = Vector3.new(0,50,0)
-				game.Debris:AddItem(Jump,.5)
-				wait(.5)
 				HumaoidRP.Anchored = true
 				Toggle = true
+					game.Debris:AddItem(Jump,.5)
+					wait(0.5)
 			elseif Toggle == true then
 				Toggle = false
 				HumaoidRP.Anchored = false
