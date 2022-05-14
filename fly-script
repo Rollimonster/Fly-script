@@ -1,7 +1,7 @@
 	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
-    	local lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-    	local maxspeed = 400 
-   	local speed = 5000 
+    local lastctrl = {f = 0, b = 0, l = 0, r = 0} 
+    local maxspeed = 400 
+    local speed = 5000 
 	local plr = game.Players.LocalPlayer
 	local char = plr.Character or plr.CharacterAdded:Wait()
 	local Humanoid = char:WaitForChild('Humanoid')
@@ -54,7 +54,7 @@
 			Gyro.D = 100
 			Gyro.P = 10000
 			while Toggle == true do
-				Forward.Velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (1+1)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(0+0,(0+0)*.4,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*100
+				Forward.Velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (1+1)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(0+0,(0+0)*.4,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*-50
 				Gyro.CFrame = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0) 
 				wait()
 			end
@@ -87,7 +87,7 @@
 			Gyro.D = 100
 			Gyro.P = 10000
 			while Toggle == true do
-				Back.Velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (1+1)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(0+0,(0+0)*.4,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*-100
+				Back.Velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (1+1)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(0+0,(0+0)*.4,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*-50
 				Gyro.CFrame = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0) 
 				wait()
 			end
@@ -205,7 +205,7 @@
 		end
 	end)
 			UIS.InputBegan:Connect(function(Input, Istyping)
-		if Input.KeyCode == Enum.KeyCode.LeftShift or Input.KeyCode == Enum.KeyCode.LeftControl then
+		if Input.KeyCode == Enum.KeyCode.LeftShift or Input.KeyCode == Enum.KeyCode.LeftControl or Input.KeyCode == Enum.KeyCode.RightControl or Input.KeyCode == Enum.KeyCode.RightShift then
 			if Toggle == false then return end
 			HumanoidRootPart.Anchored = false
 			if HumanoidRootPart:FindFirstChildOfClass('BodyVelocity') then
@@ -226,7 +226,7 @@
 		end
 	end)
 	UIS.InputEnded:Connect(function(Input, Istyping)
-		if Input.KeyCode == Enum.KeyCode.LeftShift or Input.KeyCode == Enum.KeyCode.LeftControl or Input.KeyCode == Enum.KeyCode.RightControl then
+		if Input.KeyCode == Enum.KeyCode.LeftShift or Input.KeyCode == Enum.KeyCode.LeftControl or Input.KeyCode == Enum.KeyCode.RightControl or Input.KeyCode == Enum.KeyCode.RightShift then
 			if Toggle == false then return end
 			if HumanoidRootPart:FindFirstChild("RightMovement") then
 				HumanoidRootPart.RightMovement:Destroy()
